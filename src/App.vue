@@ -5,9 +5,9 @@
     <p v-if="!data.length">Loading...</p>
 
     <div v-for="entry in data">
-      <a :href="`http://www.reddit.com${entry.data.permalink}.json`">
+      <router-link :to="`/${entry.data.subreddit}/${entry.data.id}`">
         <h2>{{ entry.data.title }}</h2>
-      </a>
+      </router-link>
 
       <h3>{{ entry.data.author }}</h3>
     </div>
