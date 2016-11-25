@@ -1,12 +1,12 @@
 <template lang="html">
-  <div class="">
+  <div class="comment">
     <h3>{{comment.author}}</h3>
 
-    <p v-if="Object.keys(comment.replies).length !== 0">
+    <div v-if="comment.replies">
       <div v-for="c in comment.replies.data.children">
         <comment :comment="c.data"></comment>
       </div>
-    </p>
+    </div>
   </div>
 </template>
 
