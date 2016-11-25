@@ -1,6 +1,6 @@
 <template>
   <div v-if="Object.keys(data).length !== 0">
-    <post-content :post="data"></post-content>
+    <post-content :post="data" :comments="comments"></post-content>
   </div>
   <div v-else>
     <p>Loading</p>
@@ -17,6 +17,7 @@ export default {
     return {
       subreddit: '',
       data: {},
+      comments: [],
     };
   },
   methods: {
@@ -25,11 +26,13 @@ export default {
       const redditUrl = 'https://www.reddit.com/r';
       const subreddit = this.$route.params.subreddit || 'all';
       const postId = this.$route.params.id;
-
       // eslint-disable-next-line no-undef
       fetch(`${redditUrl}/${subreddit}/${postId}.json`)
         .then(r => r.json())
-        .then(j => (self.data = j[0].data.children[0].data));
+        .then((j) => {
+          self.data = j[0].data.children[0].data;
+          self.comments = j[1].data.children;
+        });
     },
   },
   created() {

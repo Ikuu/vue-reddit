@@ -14,15 +14,18 @@
     <div v-else>
       <p>{{post.selftext}}</p>
     </div>
+
+    <comments :comments="comments"></comments>
   </div>
 </template>
 
 <script>
 import EmbedContent from './EmbedContent';
+import Comments from './Comments';
 
 export default {
-  props: ['post'],
-  components: { EmbedContent },
+  props: ['comments', 'post'],
+  components: { Comments, EmbedContent },
   data() {
     return {
       imageExtensionCheck: new RegExp('.(jpg|jpeg|png|gif)$', 'i'),

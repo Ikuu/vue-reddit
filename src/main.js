@@ -4,9 +4,11 @@ import App from './App';
 import Post from './Post';
 
 const router = new VueRouter({
-  // mode: 'history',
-  // base: __dirname,
   routes: [
+    {
+      path: '/',
+      component: App,
+    },
     {
       path: '/r/:subreddit?/:filter?',
       component: App,

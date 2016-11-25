@@ -28,7 +28,7 @@ export default {
 }
 
 .title::before {
-  counter-increment: section;                /* Increment the section counter*/
-  content:  counter(section) ": "; /* Display the counter */
+  counter-increment: section;
+  content:  counter(section) ": ";
 }
 </style>
