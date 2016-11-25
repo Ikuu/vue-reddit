@@ -1,24 +1,36 @@
 <template>
   <div id="app">
-    <h1> {{ subreddit}} </h1>
+    <ul>
+      <li>
+        <router-link :to="`/${subreddit}/hot`">
+          Hot
+        </router-link>
+      </li>
+      <li>
+        <router-link :to="`/${subreddit}/top`">
+          Top
+        </router-link>
+      </li>
+      <li>
+        <router-link :to="`/${subreddit}/new`">
+          New
+        </router-link>
+      </li>
+    </ul>
 
-    <p v-if="!data.length">Loading...</p>
-
-    <div v-for="entry in data">
-      <router-link :to="`/${entry.data.subreddit}/${entry.data.id}`">
-        <h2>{{ entry.data.title }}</h2>
-      </router-link>
-
-      <h3>{{ entry.data.author }}</h3>
-    </div>
+    <subreddit :name="subreddit" :data="data" :filter="filter"></subreddit>
   </div>
 </template>
 
 <script>
+import Subreddit from './components/Subreddit';
+
 export default {
   name: 'app',
+  components: { Subreddit },
   data() {
     return {
+      filter: '',
       subreddit: '',
       data: [],
     };
@@ -28,13 +40,14 @@ export default {
       const self = this;
       const redditUrl = 'https://www.reddit.com/r';
       const subreddit = this.$route.params.subreddit || 'all';
+      const filter = this.$route.params.filter || 'hot';
 
-      // Reset State
-      self.data = [];
       self.subreddit = subreddit;
+      self.filter = filter;
+      self.data = [];
 
       // eslint-disable-next-line no-undef
-      fetch(`${redditUrl}/${subreddit}.json`)
+      fetch(`${redditUrl}/${subreddit}/${filter}.json`)
         .then(r => r.json())
         .then(j => (self.data = j.data.children));
     },
@@ -49,9 +62,11 @@ export default {
 </script>
 
 <style>
-#app {
+* {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
+#app {
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

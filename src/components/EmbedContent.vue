@@ -4,7 +4,7 @@
       <youtube :url="url"></youtube>
     </div>
 
-    <div v-if="provider === 'SoundCloud'">
+    <div v-else-if="provider === 'SoundCloud'">
       <soundcloud :url="url"></soundcloud>
     </div>
   </div>

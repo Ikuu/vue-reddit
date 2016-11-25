@@ -8,11 +8,11 @@ const router = new VueRouter({
   // base: __dirname,
   routes: [
     {
-      path: '/:subreddit?',
+      path: '/:subreddit?/:filter?',
       component: App,
     },
     {
-      path: '/:subreddit/:id',
+      path: '/:subreddit/comments/:id',
       component: Post,
     },
   ],
@@ -23,12 +23,19 @@ new Vue({
   router,
   template: `
     <div>
+      <h1>Subreddits</h1>
       <ul>
+        <li>
+          <router-link to="/cfb">cfb</router-link>
+        </li>
+        <li>
+          <router-link to="/dota2">dota2</router-link>
+        </li>
         <li>
           <router-link to="/HipHopHeads">HipHopHeads</router-link>
         </li>
         <li>
-          <router-link to="/dota2">dota2</router-link>
+          <router-link to="/sneakers">sneakers</router-link>
         </li>
       </ul>
       <router-view class="view"></router-view>
