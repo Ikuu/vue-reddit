@@ -2,23 +2,25 @@
   <div id="app">
     <ul>
       <li>
-        <router-link :to="`/${subreddit}/hot`">
+        <router-link :to="`/r/${subreddit}/hot`">
           Hot
         </router-link>
       </li>
       <li>
-        <router-link :to="`/${subreddit}/top`">
+        <router-link :to="`/r/${subreddit}/top`">
           Top
         </router-link>
       </li>
       <li>
-        <router-link :to="`/${subreddit}/new`">
+        <router-link :to="`/r/${subreddit}/new`">
           New
         </router-link>
       </li>
     </ul>
 
     <subreddit :name="subreddit" :data="data" :filter="filter"></subreddit>
+
+    <button @click="loadNextPage">Load Next Page</button>
   </div>
 </template>
 
@@ -33,9 +35,12 @@ export default {
       filter: '',
       subreddit: '',
       data: [],
+      after: '',
+      page: 25,
     };
   },
   methods: {
+    // TODO: Refactor, lots of reused code.
     fetchData() {
       const self = this;
       const redditUrl = 'https://www.reddit.com/r';
@@ -49,7 +54,28 @@ export default {
       // eslint-disable-next-line no-undef
       fetch(`${redditUrl}/${subreddit}/${filter}.json`)
         .then(r => r.json())
-        .then(j => (self.data = j.data.children));
+        .then((j) => {
+          self.data = [...self.data, ...j.data.children];
+          self.after = j.data.after;
+        });
+    },
+
+    // TODO: Refactor, lots of reused code.
+    loadNextPage() {
+      const self = this;
+      const redditUrl = 'https://www.reddit.com/r';
+      const subreddit = this.$route.params.subreddit;
+      const filter = this.$route.params.filter || 'hot';
+      const queryString = `count=${self.page}&after=${self.after}`;
+
+      // eslint-disable-next-line no-undef
+      fetch(`${redditUrl}/${subreddit}/${filter}.json?${queryString}`)
+        .then(r => r.json())
+        .then((j) => {
+          self.data = [...self.data, ...j.data.children];
+          self.after = j.data.after;
+          self.page += 25;
+        });
     },
   },
   created() {
@@ -68,5 +94,9 @@ export default {
 
 #app {
   color: #2c3e50;
+}
+
+body {
+  counter-reset: section;
 }
 </style>

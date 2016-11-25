@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <section class="">
     <h1> {{name}} [{{filter}}]</h1>
 
     <p v-if="!data.length">Loading...</p>
@@ -7,7 +7,7 @@
     <div v-for="entry in data">
       <post-listing :post="entry.data"></post-listing>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

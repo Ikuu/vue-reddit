@@ -8,11 +8,11 @@ const router = new VueRouter({
   // base: __dirname,
   routes: [
     {
-      path: '/:subreddit?/:filter?',
+      path: '/r/:subreddit?/:filter?',
       component: App,
     },
     {
-      path: '/:subreddit/comments/:id',
+      path: '/r/:subreddit/comments/:id/:title?',
       component: Post,
     },
   ],
@@ -26,16 +26,16 @@ new Vue({
       <h1>Subreddits</h1>
       <ul>
         <li>
-          <router-link to="/cfb">cfb</router-link>
+          <router-link to="/r/cfb">cfb</router-link>
         </li>
         <li>
-          <router-link to="/dota2">dota2</router-link>
+          <router-link to="/r/dota2">dota2</router-link>
         </li>
         <li>
-          <router-link to="/HipHopHeads">HipHopHeads</router-link>
+          <router-link to="/r/HipHopHeads">HipHopHeads</router-link>
         </li>
         <li>
-          <router-link to="/sneakers">sneakers</router-link>
+          <router-link to="/r/sneakers">sneakers</router-link>
         </li>
       </ul>
       <router-view class="view"></router-view>
