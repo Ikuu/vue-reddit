@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import SoundCloud from './SoundCloud';
-import YouTube from './YouTube';
+import Soundcloud from './SoundCloud';
+import Youtube from './YouTube';
 
 export default {
   props: ['provider', 'url'],
-  components: { SoundCloud, YouTube },
+  components: { Soundcloud, Youtube },
 };
 </script>
 

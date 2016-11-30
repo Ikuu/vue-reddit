@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div class="post-content">
     <h1>{{post.title}}</h1>
     <p>{{post.url}}</p>
 
@@ -8,7 +8,11 @@
     </div>
 
     <div v-else-if="imageExtensionCheck.test(post.url)">
-      <img :src="post.url" alt="">
+      <img :src="post.url" :alt="post.title">
+    </div>
+
+    <div v-else-if="post.domain === 'i.reddituploads.com'">
+      <img :src="post.url" :alt="post.title">
     </div>
 
     <div v-else>
@@ -30,6 +34,12 @@ export default {
     return {
       imageExtensionCheck: new RegExp('.(jpg|jpeg|png|gif)$', 'i'),
     };
+  },
+  created() {
+    document.title = this.post.title;
+    const reg = /&amp;/gi;
+    const parsedUrl = this.post.url.replace(reg, '&');
+    this.post.url = parsedUrl;
   },
 };
 </script>

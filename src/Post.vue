@@ -26,6 +26,7 @@ export default {
       const redditUrl = 'https://www.reddit.com/r';
       const subreddit = this.$route.params.subreddit || 'all';
       const postId = this.$route.params.id;
+
       // eslint-disable-next-line no-undef
       fetch(`${redditUrl}/${subreddit}/${postId}.json`)
         .then(r => r.json())

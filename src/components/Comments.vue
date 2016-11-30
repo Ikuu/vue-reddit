@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div class="comments">
     <h1>Comments</h1>
 
     <div v-for="comment in comments">

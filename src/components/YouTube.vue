@@ -4,11 +4,19 @@
 
 <script>
 export default {
+  name: 'Youtube',
   props: ['url'],
   data() {
     return {
-      videoId: this.url.split('=')[1],
+      videoId: '',
     };
+  },
+  created() {
+    if (this.url.includes('youtu.be')) {
+      this.videoId = this.url.split('/')[3];
+    } else {
+      this.videoId = this.url.split('=')[1];
+    }
   },
 };
 </script>
