@@ -4,6 +4,14 @@
 </template>
 
 <script>
+import parseHtml from '../helper/HtmlParse';
+
+export default {
+  name: 'Instagram',
+  props: ['embed'],
+  computed: {
+    parsedHtmlEmbed() {
+      return parseHtml(this.embed);
     },
   },
 };
