@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="listing">
       <div class="title">
-        <router-link :to="post.permalink">{{ post.title }}</router-link>
+        <router-link :to="post.permalink">{{ parsedTitle }}</router-link>
         <span>[{{ post.domain }}]</span>
       </div>
 
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import parseHtml from '../helper/HtmlParse';
+
 export default {
   props: ['post'],
   data() {
@@ -20,10 +22,10 @@ export default {
       isAll: (this.$route.params.subreddit || 'All') === 'All',
     };
   },
-  created() {
-    const reg = /&amp;/gi;
-    const parsedUrl = this.post.title.replace(reg, '&');
-    this.post.title = parsedUrl;
+  computed: {
+    parsedTitle() {
+      return parseHtml(this.post.title);
+    },
   },
 };
 </script>

@@ -1,11 +1,15 @@
 <template lang="html">
   <div class="embed-content">
-    <div v-if="provider === 'YouTube'">
-      <youtube :url="url"></youtube>
+    <div v-if="provider === 'SoundCloud'">
+      <soundcloud :url="post.url"></soundcloud>
     </div>
 
-    <div v-else-if="provider === 'SoundCloud'">
-      <soundcloud :url="url"></soundcloud>
+    <div v-else-if="provider === 'Imgur'">
+      <img :src="post.preview.images[0].source.url" :alt="post.title">
+    </div>
+
+    <div v-else-if="provider === 'YouTube'">
+      <youtube :url="post.url"></youtube>
     </div>
   </div>
 </template>
@@ -15,7 +19,7 @@ import Soundcloud from './SoundCloud';
 import Youtube from './YouTube';
 
 export default {
-  props: ['provider', 'url'],
+  props: ['provider', 'post'],
   components: { Soundcloud, Youtube },
 };
 </script>
