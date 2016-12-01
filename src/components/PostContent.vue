@@ -23,7 +23,7 @@
     </div>
 
     <div v-else>
-      <p>{{post.selftext}}</p>
+      <p v-html="parsedBody"></p>
     </div>
 
     <comments :comments="comments"></comments>
@@ -34,6 +34,7 @@
 import Comments from './Comments';
 import EmbedContent from './EmbedContent';
 import Instagram from './Instagram';
+import parseHtml from '../helper/HtmlParse';
 
 export default {
   props: ['comments', 'post'],
@@ -44,7 +45,15 @@ export default {
     };
   },
   created() {
-    document.title = this.post.title;
+    document.title = parseHtml(this.post.title);
+  },
+  computed: {
+    parsedBody() {
+      if (this.post.selftext_html) {
+        return parseHtml(this.post.selftext_html);
+      }
+      return '';
+    },
   },
 };
 </script>

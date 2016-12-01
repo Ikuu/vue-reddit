@@ -1,9 +1,13 @@
 <template lang="html">
   <div class="comment">
     <h3>{{comment.author}}</h3>
-    <div v-html="comment.body"></div>
+    <div v-html="parsedCommentBody"></div>
 
-    <div v-if="comment.replies">
+    <span v-if="comment.replies" @click="hideChildren">
+      Hide
+    </span>
+
+    <div v-if="comment.replies && showChildren">
       <div v-for="c in comment.replies.data.children">
         <comment :comment="c.data"></comment>
       </div>
@@ -12,9 +16,29 @@
 </template>
 
 <script>
+import parseHtml from '../helper/HtmlParse';
+
 export default {
   name: 'Comment',
   props: ['comment'],
+  data() {
+    return {
+      showChildren: true,
+    };
+  },
+  computed: {
+    parsedCommentBody() {
+      if (this.comment.body_html) {
+        return parseHtml(this.comment.body_html);
+      }
+      return '';
+    },
+  },
+  methods: {
+    hideChildren() {
+      this.showChildren = !this.showChildren;
+    },
+  },
 };
 </script>
 
